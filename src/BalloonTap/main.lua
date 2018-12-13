@@ -4,10 +4,17 @@
 -- 
 -----------------------------------------------------------------------------------------
 
+-- variable for counting the taps
+local tapCount = 0
+
 -- initialize background
 local background = display.newImageRect( "../pictures/background.png", 360, 570 )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
+
+-- initialize text for counting the taps
+local tapText = display.newText( tapCount, display.contentCenterX, 20, native.systemFont, 40 )
+tapText:setFillColor( 0, 0, 0 )
 
 -- initialize platform
 local platform = display.newImageRect( "../pictures/platform.png", 300, 50 )
@@ -31,6 +38,8 @@ physics.addBody( balloon, "dynamic", { radius=50, bounce=0.3 } )
 -- function for tapping on balloon
 local function pushBalloon()
     balloon:applyLinearImpulse( 0, -0.75, balloon.x, balloon.y )
+    tapCount = tapCount + 1
+    tapText.text = tapCount
 end
 
 -- set eventListener on background for pushing the balloon
