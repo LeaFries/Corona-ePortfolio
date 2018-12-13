@@ -41,7 +41,7 @@ local sheetOptions =
             width = 98,
             height = 79
         },
-        {
+        {   -- 5) laser
             x = 98,
             y = 265,
             width = 14,
@@ -120,6 +120,23 @@ local function createAsteroid()
         newAsteroid.y = math.random( 500 )
         newAsteroid:setLinearVelocity( math.random( -120, -40 ), math.random( 20, 60 ) )
     end
+
+    newAsteroid:applyTorque( math.random( -6, 6 ) )
+end
+
+local function fireLaser()
+    local newLaser = display.newImageRect( mainGroup, objectSheet, 5, 14, 40)
+    physics.addBody( newLaser, "dynamic", { isSensor=true } )
+    newLaser.isBullet = true 
+    newLaser.myName = "laser"
+
+    newLaser.x = ship.x
+    newLaser.y = ship.y
+    newLaser:toBack()
+
+    transition.to( newLaser, { y=-40, time=500,
+        onComplete = function() display.remove( newLaser ) end -- anonymous function
+    } )
 end
 
 local function gameLoop()
@@ -128,4 +145,4 @@ local function gameLoop()
 end
 
 gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
-gameLoop()
+ship:addEventListener( "tap", fireLaser )
