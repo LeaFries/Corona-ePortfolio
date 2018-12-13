@@ -79,3 +79,15 @@ ship.x = display.contentCenterX
 ship.y = display.contentHeight - 100
 physics.addBody( ship, { radius=30, isSensor=true } )
 ship.myName = "ship"
+
+-- display lives and score
+livesText = display.newText( uiGroup, "Lives: " .. lives, 200, 80, native.systemFont, 36 )
+scoreText = display.newText( uiGroup, "Score: " .. score, 400, 80, native.systemFont, 36 )
+
+-- hide the status bar
+display.setStatusBar( display.HiddenStatusBar )
+
+local function updateText()
+    livesText.text = "Lives: " .. lives
+    scoreText.text = "Score: " .. score
+end
