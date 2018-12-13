@@ -87,7 +87,45 @@ scoreText = display.newText( uiGroup, "Score: " .. score, 400, 80, native.system
 -- hide the status bar
 display.setStatusBar( display.HiddenStatusBar )
 
+-- function for updating text
 local function updateText()
     livesText.text = "Lives: " .. lives
     scoreText.text = "Score: " .. score
 end
+
+-- function for creating asteroids
+local function createAsteroid()
+    local newAsteroid = display.newImageRect( mainGroup, objectSheet, 2, 102, 85 )
+    table.insert( asteroidsTable, newAsteroid )
+    physics.addBody( newAsteroid, "dynamic", {radius=40, bounce=0.8} )
+    newAsteroid.myName = "asteroid"
+
+    local whereFrom = math.random( 3 )
+    
+    if ( whereFrom == 1 ) then
+        -- from the left
+        newAsteroid.x = -60
+        newAsteroid.y = math.random( 500 )
+        -- math.random of two parameters creates a random number between those
+        -- math.random of one parameter creates a random number between 1 and the parameter
+        newAsteroid:setLinearVelocity( math.random( 40, 120 ), math.random( 20, 60 ) )
+    elseif ( whereFrom == 2 ) then
+        -- from the top
+        newAsteroid.x = math.random( display.contentWidth)
+        newAsteroid.y = -60
+        newAsteroid:setLinearVelocity( math.random( -40, 40 ), math.random( 40, 120 ) )
+    elseif ( whereFrom == 3 ) then
+        -- from the right
+        newAsteroid.x = display.contentWidth + 60
+        newAsteroid.y = math.random( 500 )
+        newAsteroid:setLinearVelocity( math.random( -120, -40 ), math.random( 20, 60 ) )
+    end
+end
+
+local function gameLoop()
+    -- create new asteroid
+    createAsteroid()
+end
+
+gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
+gameLoop()
