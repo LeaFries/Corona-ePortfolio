@@ -139,10 +139,37 @@ local function fireLaser()
     } )
 end
 
+ship:addEventListener( "tap", fireLaser )
+
+-- AUFGEHÖRT HIER:
+local function dragShip( event )
+    local ship = event.target
+    local phase = event.phase
+
+    if ( "began" == phase ) then
+        -- set touch focus on the ship
+        display.currentStage:setFocus( ship )
+        -- store initial offset position
+        ship.touchOffsetX = event.x - ship.x
+        
+    elseif ( "moved" == phase ) then
+        -- move the ship to the new touch position
+        ship.x = event.x - ship.touchOffsetX
+        
+    --elseif ( "ended" == phase or "cancelled" == phase ) then
+        -- release touch focus on the ship
+    --    display.currentStage:setFocus( nil )
+    end
+
+    --return true     -- prevents touch propagation to underlying objects
+end
+
+ship:addEventListener( "touch", dragShip )
+
 local function gameLoop()
     -- create new asteroid
     createAsteroid()
+    
 end
 
 gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
-ship:addEventListener( "tap", fireLaser )
