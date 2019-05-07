@@ -161,7 +161,7 @@ local function dragShip( event )
     --    display.currentStage:setFocus( nil )
     end
 
-    --return true     -- prevents touch propagation to underlying objects
+    return true     -- prevents touch propagation to underlying objects
 end
 
 ship:addEventListener( "touch", dragShip )
@@ -169,7 +169,19 @@ ship:addEventListener( "touch", dragShip )
 local function gameLoop()
     -- create new asteroid
     createAsteroid()
-    
+    -- Remove asteroids which have drifted off screen
+    for i = #asteroidsTable, 1, -1 do
+        local thisAsteroid = asteroidsTable[i]
+
+        if ( thisAsteroid.x < -100 or
+                thisAsteroid.x > display.contentWidth + 100 or
+                thisAsteroid.y < -100 or
+                thisAsteroid.y > display.contentHeight + 100)
+        then
+            display.remove( thisAsteroid )
+            table.remove( asteroidsTable, i )
+        end
+    end
 end
 
 gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
