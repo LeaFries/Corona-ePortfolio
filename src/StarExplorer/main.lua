@@ -141,7 +141,6 @@ end
 
 ship:addEventListener( "tap", fireLaser )
 
--- AUFGEHÖRT HIER:
 local function dragShip( event )
     local ship = event.target
     local phase = event.phase
@@ -156,9 +155,9 @@ local function dragShip( event )
         -- move the ship to the new touch position
         ship.x = event.x - ship.touchOffsetX
         
-    --elseif ( "ended" == phase or "cancelled" == phase ) then
+    elseif ( "ended" == phase or "cancelled" == phase ) then
         -- release touch focus on the ship
-    --    display.currentStage:setFocus( nil )
+        display.currentStage:setFocus( nil )
     end
 
     return true     -- prevents touch propagation to underlying objects
@@ -185,3 +184,18 @@ local function gameLoop()
 end
 
 gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
+
+local function restoreShip()
+
+    ship.isBodyActive = false 
+    ship.x = display.contentCenterX
+    ship.y = display.contentHeight - 100
+
+    -- fade in the ship
+    transition.to( ship, { alpha=1, time=4000,
+        onComplete = function()
+            ship.isBodyActive = true
+            died = false
+        end
+    } )
+end
