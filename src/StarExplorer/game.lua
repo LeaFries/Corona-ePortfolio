@@ -173,6 +173,10 @@ local function restoreShip()
     } )
 end
 
+local function endGame()
+    composer.gotoScene( "menu", { time=800, effect="crossFade" } )
+end
+
 local function onCollision( event )
     if ( event.phase == "began" ) then
         local obj1 = event.object1
@@ -207,6 +211,7 @@ local function onCollision( event )
 
                 if ( lives == 0 ) then
                     display.remove( ship )
+                    timer.performWithDelay( 2000, endGame )
                 else
                     ship.alpha = 0
                     timer.performWithDelay( 1000, restoreShip )
@@ -283,11 +288,14 @@ function scene:hide( event )
 	local phase = event.phase
 
 	if ( phase == "will" ) then
-		-- Code here runs when the scene is on screen (but is about to go off screen)
+        -- Code here runs when the scene is on screen (but is about to go off screen)
+        timer.cancel( gameLoopTimer )
 
 	elseif ( phase == "did" ) then
-		-- Code here runs immediately after the scene goes entirely off screen
-
+        -- Code here runs immediately after the scene goes entirely off screen
+        Runtime:removeEventListener( "collision", onCollision )
+        physics.pause()
+        composer.removeScene( "game" )
 	end
 end
 
