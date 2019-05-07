@@ -186,12 +186,12 @@ end
 gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
 
 local function restoreShip()
-
-    ship.isBodyActive = false 
+ 
+    ship.isBodyActive = false
     ship.x = display.contentCenterX
     ship.y = display.contentHeight - 100
-
-    -- fade in the ship
+ 
+    -- Fade in the ship
     transition.to( ship, { alpha=1, time=4000,
         onComplete = function()
             ship.isBodyActive = true
@@ -199,3 +199,48 @@ local function restoreShip()
         end
     } )
 end
+
+local function onCollision( event )
+    if ( event.phase == "began" ) then
+        local obj1 = event.object1
+        local obj2 = event.object2
+
+        if ( ( obj1.myName == "laser" and obj2.myName == "asteroid" ) or
+        ( obj1.myName == "asteroid" and obj2.myName == "laser" ) ) then
+
+             -- remove both the laser and asteroid
+            display.remove( obj1 )
+            display.remove( obj2 )
+
+            for i = #asteroidsTable, 1, -1 do
+                if ( asteroidsTable[i] == obj1 or asteroidsTable[i] == obj2 ) then
+                    table.remove( asteroidsTable, i )
+                    break
+                end
+            end
+
+            -- increase score
+            score = score + 100
+            scoreText.text = "Score: " .. score
+
+        elseif ( ( obj1.myName == "ship" and obj2.myName == "asteroid" ) or
+                ( obj1.myName == "asteroid" and obj2.myName == "ship" ) ) then
+            if ( died == false ) then 
+                died = true
+
+                -- update lives
+                lives = lives - 1
+                livesText.text = "Lives: " .. lives
+
+                if ( lives == 0 ) then
+                    display.remove( ship )
+                else
+                    ship.alpha = 0
+                    timer.performWithDelay( 1000, restoreShip )
+                end
+            end
+        end
+    end
+end
+
+Runtime:addEventListener( "collision", onCollision )
