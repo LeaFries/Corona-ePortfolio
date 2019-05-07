@@ -64,9 +64,9 @@ local livesText
 local scoreText
 
 -- set up display groups
-local backGroup -- display group for the background image
-local mainGroup -- display group for the ship, asteroids, lasers, etc.
-local uiGroup   -- display group for UI objects like the score
+local backGroup 
+local mainGroup 
+local uiGroup 
 
 local function updateText()
 	livesText.text = "Lives: " .. lives
@@ -226,6 +226,34 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
+	physics.pause() -- Temporarily pause the physics engine
+
+	backGroup = display.newGroup() -- Display group for the background image
+	sceneGroup:insert( backGroup ) -- Insert into the scene's view group
+
+	mainGroup = display.newGroup() -- Display group for the ship, asteroids, lasers, etc.
+	sceneGroup:insert( mainGroup ) -- Insert into the scene's view group
+
+	uiGroup = display.newGroup()   -- Display group for UI objects like the score
+	sceneGroup:insert( uiGroup )   -- Insert into the scene's view group
+
+	-- load background
+	local background = display.newImageRect( backGroup, "pictures/background.png", 800, 1400 )
+	background.x = display.contentCenterX
+	background.y = display.contentCenterY
+
+	ship = display.newImageRect( mainGroup, objectSheet, 4, 98, 79 )
+	ship.x = display.contentCenterX
+	ship.y = display.contentHeight - 100
+	physics.addBody( ship, { radius=30, isSensor=true } )
+	ship.myName = "ship"
+
+	-- display lives and score
+	livesText = display.newText( uiGroup, "Lives: " .. lives, 200, 80, native.systemFont, 36 )
+    scoreText = display.newText( uiGroup, "Score: " .. score, 400, 80, native.systemFont, 36 )
+    
+    ship:addEventListener( "tap", fireLaser )
+    ship:addEventListener( "touch", dragShip )
 end
 
 
@@ -239,7 +267,10 @@ function scene:show( event )
 		-- Code here runs when the scene is still off screen (but is about to come on screen)
 
 	elseif ( phase == "did" ) then
-		-- Code here runs when the scene is entirely on screen
+        -- Code here runs when the scene is entirely on screen
+        physics.start()
+        Runtime:addEventListener( "collision", onCollision )
+        gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
 
 	end
 end
