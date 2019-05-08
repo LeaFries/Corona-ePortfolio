@@ -213,6 +213,9 @@ local function onCollision( event )
             if ( died == false ) then 
                 died = true
 
+                -- play explosion sound
+                audio.play( explosionSound )
+
                 -- update lives
                 lives = lives - 1
                 livesText.text = "Lives: " .. lives
