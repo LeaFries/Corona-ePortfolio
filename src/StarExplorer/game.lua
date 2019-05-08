@@ -318,6 +318,9 @@ function scene:hide( event )
         -- Code here runs immediately after the scene goes entirely off screen
         Runtime:removeEventListener( "collision", onCollision )
         physics.pause()
+        
+        -- stop the music
+        audio.stop( 1 )
         composer.removeScene( "game" )
 	end
 end
