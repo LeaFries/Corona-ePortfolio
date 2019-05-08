@@ -330,8 +330,12 @@ end
 function scene:destroy( event )
 
 	local sceneGroup = self.view
-	-- Code here runs prior to the removal of scene's view
-
+    -- Code here runs prior to the removal of scene's view
+    
+    -- dispose audio
+    audio.dispose( explosionSound )
+    audio.dispose( fireSound )
+    audio.dispose( musicTrack )
 end
 
 
