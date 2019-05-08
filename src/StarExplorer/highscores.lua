@@ -15,6 +15,35 @@ local scoresTable = {}
 
 local filePath = system.pathForFile( "scores.json", system.DocumentsDirectory )
 
+local function loadScores()
+
+	local file = io.open( filePath, "r" )
+
+	if file then
+		local contents = file:read( "*a" )
+		io.close( file )
+		scoresTable = json.decode( contents )
+	end
+
+	if ( scoresTable == nil or #scoresTable == 0 ) then
+		scoresTable = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+	end
+end
+
+local function saveScore()
+	
+	for i = #scoresTable, 11, -1 do
+		table.remove( scoresTable, i )
+	end
+
+	local file = io.open( filePath, "w" )
+
+	if file then
+		file:write( json.encode( scoresTable ) )
+		io.close( file )
+	end
+end
+
 -- -----------------------------------------------------------------------------------
 -- Scene event functions
 -- -----------------------------------------------------------------------------------
