@@ -70,6 +70,7 @@ local uiGroup
 
 local explosionSound
 local fireSound
+local musicTrack
 
 local function updateText()
 	livesText.text = "Lives: " .. lives
@@ -277,6 +278,7 @@ function scene:create( event )
 
     explosionSound = audio.loadSound( "audio/explosion.wav" )
     fireSound = audio.loadSound( "audio/fire.wav" )
+    musicTrack = audio.loadStream( "audio/80s-Space-Game_Looping.wav")
 end
 
 
@@ -294,6 +296,9 @@ function scene:show( event )
         physics.start()
         Runtime:addEventListener( "collision", onCollision )
         gameLoopTimer = timer.performWithDelay( 500, gameLoop, 0 )
+
+        -- start the music
+        audio.play( musicTrack, { channel=1, loops=-1 } )
 
 	end
 end
