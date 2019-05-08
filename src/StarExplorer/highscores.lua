@@ -30,7 +30,7 @@ local function loadScores()
 	end
 end
 
-local function saveScore()
+local function saveScores()
 	
 	for i = #scoresTable, 11, -1 do
 		table.remove( scoresTable, i )
@@ -54,6 +54,21 @@ function scene:create( event )
 	local sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen
 
+	-- load the previous scores
+	loadScores()
+
+	-- insert the saved score from the last game into the table and reset it
+	table.insert( scoresTable, composer.getVariable( "finalScore" ) )
+	composer.setVariable( "finalScore", 0 )
+
+	-- sort the table entries from highest to lowest
+	local function compare( a, b )
+		return a > b
+	end
+	table.sort( scoresTable, compare )
+
+	-- save the scores
+	saveScores()
 end
 
 
