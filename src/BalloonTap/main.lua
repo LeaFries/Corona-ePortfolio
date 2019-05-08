@@ -8,7 +8,7 @@
 local tapCount = 0
 
 -- initialize background
-local background = display.newImageRect( "../pictures/background.png", 360, 570 )
+local background = display.newImageRect( "pictures/background.png", 360, 570 )
 background.x = display.contentCenterX
 background.y = display.contentCenterY
 
@@ -17,12 +17,12 @@ local tapText = display.newText( tapCount, display.contentCenterX, 20, native.sy
 tapText:setFillColor( 0, 0, 0 )
 
 -- initialize platform
-local platform = display.newImageRect( "../pictures/platform.png", 300, 50 )
+local platform = display.newImageRect( "pictures/platform.png", 300, 50 )
 platform.x = display.contentCenterX
 platform.y = display.contentHeight
 
 -- initialize balloon
-local balloon = display.newImageRect( "../pictures/balloon.png", 112, 112 )
+local balloon = display.newImageRect( "pictures/balloon.png", 112, 112 )
 balloon.x = display.contentCenterX
 balloon.y = display.contentCenterY
 balloon.alpha = 0.8 -- transparency of balloon
