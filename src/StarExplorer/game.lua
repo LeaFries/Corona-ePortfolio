@@ -107,6 +107,10 @@ local function createAsteroid()
 end
 
 local function fireLaser()
+
+    -- play fire sound
+    audio.play( fireSound )
+
     local newLaser = display.newImageRect( mainGroup, objectSheet, 5, 14, 40)
     physics.addBody( newLaser, "dynamic", { isSensor=true } )
     newLaser.isBullet = true 
