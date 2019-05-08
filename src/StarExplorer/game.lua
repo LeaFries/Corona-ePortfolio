@@ -182,6 +182,7 @@ local function endGame()
 end
 
 local function onCollision( event )
+
     if ( event.phase == "began" ) then
         local obj1 = event.object1
         local obj2 = event.object2
@@ -192,6 +193,9 @@ local function onCollision( event )
              -- remove both the laser and asteroid
             display.remove( obj1 )
             display.remove( obj2 )
+
+            -- play explosion sound
+            audio.play( explosionSound )
 
             for i = #asteroidsTable, 1, -1 do
                 if ( asteroidsTable[i] == obj1 or asteroidsTable[i] == obj2 ) then
