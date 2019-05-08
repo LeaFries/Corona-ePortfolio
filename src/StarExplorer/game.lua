@@ -68,6 +68,9 @@ local backGroup
 local mainGroup 
 local uiGroup 
 
+local explosionSound
+local fireSound
+
 local function updateText()
 	livesText.text = "Lives: " .. lives
 	scoreText.text = "Score. " .. score
@@ -260,6 +263,9 @@ function scene:create( event )
     
     ship:addEventListener( "tap", fireLaser )
     ship:addEventListener( "touch", dragShip )
+
+    explosionSound = audio.loadSound( "audio/explosion.wav" )
+    fireSound = audio.loadSound( "audio/fire.wav" )
 end
 
 
