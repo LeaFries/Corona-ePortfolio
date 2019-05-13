@@ -16,6 +16,8 @@ For this project, you will need three image files, placed within the pictures fo
 
 ## Loading the Background
 
+![Background](pictures/Background.png)
+
 The first image that we need to load is the background. Corona places everything on the screen from back to front in regards to layering, so the first image we load will exist behind other images that are loaded afterward. While there are ways to change the layering order of images and send them to the back or front of the display stack, we'll keep this project simple and load them in a logical order.
 
 Using your chosen text editor, locate and open the main.lua file within your project folder. The main.lua file is the foundational "core program file" of every Corona project and you cannot create an app without it. This is the Lua file with which the application starts, every time you run the app.
@@ -68,6 +70,8 @@ In addition, to give the balloon a slightly transparent appearance, we'll reduce
 ```lua
     balloon.alpha = 0.8
 ```
+
+![Balloon Platform](pictures/Balloon_Platform.png)
 
 ## Adding Physics
 
@@ -147,6 +151,8 @@ The third and fourth parameters, ```balloon.x``` and ```balloon.y```, tell the p
 If you apply the force at a location which is not the center of the balloon, it may cause the balloon to move in an unexpected direction or spin around. 
 For this game, we will keep the force focused on the center of the balloon.
 
+![Coordinates](pictures/Coordinates.png)
+
 ## Events
 
 Events are what create interactivity and, in many ways, Corona is an event-based framework where information is dispatched during a specific event to an event listener. 
@@ -209,6 +215,8 @@ The fourth parameter for this API is the font in which to render the text.
 Corona supports custom fonts across all platforms, but for this game we'll use the default system font by specifying native.systemFont.
 The final parameter (40) is the intended size of the rendered text.
 
+![Text White](pictures/Text_White.png)
+
 By default, text created with ```display.newText()``` will be white. 
 Fortunately, it's easy to change this. Directly following the line you just added, type the following command:
 
@@ -217,6 +225,8 @@ Fortunately, it's easy to change this. Directly following the line you just adde
 ```
 
 Simply put, this ```setFillColor()``` command modifies the fill color of the object tapText.
+
+![Text Black](pictures/Text_Black.png)
 
 The new text object looks nice, but it doesn't actually do anything. 
 To make it update when the player taps the balloon, we'll need to modify our ```pushBalloon()``` function. 
@@ -233,5 +243,7 @@ Let's examine these lines individually:
 
 * The second new command, ```tapText.text = tapCount```, updates the text property of our tapText object. 
 This allows us to quickly change text without having to create a new object each time.
+
+![App](pictures/App.png)
 
 Copyright © by Corona
