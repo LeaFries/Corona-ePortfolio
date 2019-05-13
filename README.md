@@ -1,8 +1,8 @@
 # Corona-ePortfolio
 Corona - Topic for the ePortfolio in 4th semester, course: Softwareengineering
 
-You can find code in the src folder, as well as the sample code for the presentation in the future.
+You can find code in the src folder, as well as the sample code for the presentation.
 
-There will be slides for the e-Portfolio presentation in the presentation folder.
+The slides for the e-Portfolio presentation can be found in the presentation folder.
 
-In the documentation folder, you will find a Getting Started Guide, as well as a tutorial for writing your first game with Corona.
+In the documentation folder, you can find an installation guide, as well as a tutorial for writing your first game with Corona.
