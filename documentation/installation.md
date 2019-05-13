@@ -12,7 +12,11 @@ Now you can develop your apps using an IDE like Visual Studio Code.
 
 
 ## Use Corona
-For developing with Corona, create a new project. 
+For developing with Corona, create a new project:
+
+![Welcome Screen](pictures/WelcomeScreen.png)
+
+![Create new project](pictures/Create_new_project.png)
 
 File explorer, the app itself and Visual Studio Code with main.lua are opened automatically.
 
